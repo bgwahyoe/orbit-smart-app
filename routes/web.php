@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\MataKuliahController;
+use App\Http\Controllers\PrioritasController;
 
 Route::view('/', 'landing')->name('home');
 
@@ -18,14 +19,16 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('tugas', TugasController::class);
     Route::resource('matakuliah', MataKuliahController::class);
 
+    Route::get('/prioritas', [PrioritasController::class, 'index'])
+        ->name('prioritas.index');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
     Route::get('/tugas', [TugasController::class, 'index'])
         ->name('tugas.index');
 
-    Route::view('/prioritas', 'coming-soon')
-        ->name('prioritas.index');
+    
 
     Route::view('/kalender', 'coming-soon')
         ->name('kalender.index');

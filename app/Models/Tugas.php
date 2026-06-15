@@ -13,6 +13,8 @@ class Tugas extends Model
         'deskripsi',
         'deadline',
         'status',
+        'kesulitan',
+        'estimasi_jam',
         'user_id',
         'mata_kuliah_id'
     ];
