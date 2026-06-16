@@ -5,6 +5,16 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\PrioritasController;
+use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\ProgresController;
+
+Route::middleware(['auth'])->group(function () {
+    
+    Route::get('/progres', [ProgresController::class, 'index'])->name('progres.index');
+});
+
+Route::post('/pengaturan', [PengaturanController::class, 'update'])
+    ->name('pengaturan.update');
 
 Route::view('/', 'landing')->name('home');
 
@@ -39,9 +49,8 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/notifikasi', 'coming-soon')
         ->name('notifikasi.index');
 
-    Route::view('/progres', 'coming-soon')
-        ->name('progres.index');
+    Route::get('/progres', [ProgresController::class, 'index'])->name('progres.index');
 
-    Route::view('/pengaturan', 'coming-soon')
-        ->name('pengaturan.index');
+    Route::view('/pengaturan', 'pengaturan.index')
+    ->name('pengaturan.index');
 });

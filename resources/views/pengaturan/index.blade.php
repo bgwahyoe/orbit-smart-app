@@ -162,9 +162,9 @@
             </div>
 
             @if(session('success'))
-                <div class="mt-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl flex items-center gap-3 shadow-md">
-                    <i class="fa-solid fa-circle-check text-2xl"></i>
-                    <span class="text-lg font-bold">{{ session('success') }}</span>
+                <div class="mt-6 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-3 shadow-md">
+                    <i class="fa-solid fa-circle-check text-2xl text-emerald-600"></i>
+                    <span class="text-lg font-bold text-emerald-800" style="color: #065f46 !important;">{{ session('success') }}</span>
                 </div>
             @endif
 

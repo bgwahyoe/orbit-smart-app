@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            
+            // Kolom Preferensi Tambahan
+            $table->boolean('notif_email')->default(false);
+            $table->boolean('dark_mode')->default(false);
+            $table->boolean('reminder_tugas')->default(false);
+
             $table->rememberToken();
             $table->timestamps();
         });
