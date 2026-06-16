@@ -1,90 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-<div>
-    <div>
-        <h1 class="text-5xl font-bold text-[#1E1E1E] dark:text-white">
-            Progress Belajar
-        </h1>
-        <p class="text-gray-500 dark:text-gray-400 mt-3 text-xl">
-            Pantau perkembangan akademik dan produktivitas Anda.
-        </p>
+<div class="p-8 max-w-7xl mx-auto">
+    <div class="mb-8">
+        <h1 class="text-3xl font-extrabold text-white">Progres Belajar</h1>
+        <p class="text-gray-400 mt-2">Pantau perkembangan akademik dan produktivitas Anda.</p>
     </div>
 
-    <div class="grid grid-cols-3 gap-6 mt-10">
-
-        <div class="bg-white rounded-[24px] p-6 shadow-sm dark:bg-[#1E1E1E] dark:border dark:border-gray-800">
-            <p class="text-gray-500 dark:text-gray-400 text-sm">TUGAS SELESAI</p>
-            <h2 class="text-4xl font-bold mt-2 text-gray-900 dark:text-white">12</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-[#1a1a1a] p-6 rounded-2xl border border-gray-800">
+            <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">Tugas Selesai</p>
+            <h2 class="text-4xl font-extrabold text-white mt-2">12</h2>
         </div>
-
-        <div class="bg-white rounded-[24px] p-6 shadow-sm dark:bg-[#1E1E1E] dark:border dark:border-gray-800">
-            <p class="text-gray-500 dark:text-gray-400 text-sm">TARGET MINGGUAN</p>
-            <h2 class="text-4xl font-bold mt-2 text-gray-900 dark:text-white">80%</h2>
+        <div class="bg-[#1a1a1a] p-6 rounded-2xl border border-gray-800">
+            <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">Target Mingguan</p>
+            <h2 class="text-4xl font-extrabold text-[#EC4899] mt-2">80%</h2>
         </div>
-
-        <div class="bg-white rounded-[24px] p-6 shadow-sm dark:bg-[#1E1E1E] dark:border dark:border-gray-800">
-            <p class="text-gray-500 dark:text-gray-400 text-sm">PRODUKTIVITAS</p>
-            <h2 class="text-4xl font-bold mt-2 text-gray-900 dark:text-white">82%</h2>
+        <div class="bg-[#1a1a1a] p-6 rounded-2xl border border-gray-800">
+            <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">Produktivitas</p>
+            <h2 class="text-4xl font-extrabold text-[#10B981] mt-2">82%</h2>
         </div>
-
     </div>
 
-    <div class="bg-white rounded-[24px] p-8 shadow-sm mt-8 dark:bg-[#1E1E1E] dark:border dark:border-gray-800">
-
-        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
-            Progress Semester
-        </h3>
-
-        <div class="mt-6">
-            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded-full">
-                <div class="bg-[#FF69B4] h-4 rounded-full" style="width: {{ $persentase ?? 0 }}%"></div>
-            </div>
-
-            <p class="mt-4 text-[#AC2471] dark:text-[#FF69B4] font-bold text-2xl">
-                <span class="text-4xl font-extrabold">{{ $persentase ?? 0 }}%</span>
-            </p>
+    <div class="bg-[#1a1a1a] p-8 rounded-2xl border border-gray-800">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold text-white">Progress Semester</h3>
+            <span class="text-[#EC4899] font-bold">45%</span>
         </div>
-
-    </div>
-
-    <div class="bg-white rounded-[24px] p-8 shadow-sm mt-8 dark:bg-[#1E1E1E] dark:border dark:border-gray-800">
-
-        <h3 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-            Aktivitas Terbaru
-        </h3>
-
-        <div class="space-y-4">
-
-            <div class="border-b border-gray-100 dark:border-gray-800 pb-3">
-                <p class="font-medium text-gray-900 dark:text-gray-200">
-                    Menyelesaikan Tugas Basis Data
-                </p>
-                <p class="text-gray-500 dark:text-gray-400 text-sm">
-                    Hari ini
-                </p>
-            </div>
-
-            <div class="border-b border-gray-100 dark:border-gray-800 pb-3">
-                <p class="font-medium text-gray-900 dark:text-gray-200">
-                    Menyelesaikan Kuis Statistik
-                </p>
-                <p class="text-gray-500 dark:text-gray-400 text-sm">
-                    Kemarin
-                </p>
-            </div>
-
-            <div>
-                <p class="font-medium text-gray-900 dark:text-gray-200">
-                    Mengumpulkan Proposal Penelitian
-                </p>
-                <p class="text-gray-500 dark:text-gray-400 text-sm">
-                    3 hari lalu
-                </p>
-            </div>
-
+        <div class="w-full bg-gray-800 rounded-full h-4 overflow-hidden">
+            <div class="bg-gradient-to-r from-[#EC4899] to-pink-600 h-full rounded-full" style="width: 45%"></div>
         </div>
-
     </div>
 </div>
 @endsection

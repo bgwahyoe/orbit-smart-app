@@ -7,6 +7,16 @@ use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\PrioritasController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\ProgresController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\BelajarController; 
+use App\Http\Controllers\NotificationController;
+
+Route::get('/notifikasi', [NotificationController::class, 'index'])->name('notifikasi.index');
+
+Route::get('/rekomendasibelajar', [BelajarController::class, 'index'])->name('rekomendasibelajar.index');
+
+
+Route::get('/kalender', [CalendarController::class, 'index'])->name('kalender.index');
 
 Route::middleware(['auth'])->group(function () {
     
@@ -38,16 +48,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tugas', [TugasController::class, 'index'])
         ->name('tugas.index');
 
-    
-
-    Route::view('/kalender', 'coming-soon')
-        ->name('kalender.index');
-
-    Route::view('/rekomendasibelajar', 'coming-soon')
-        ->name('rekomendasibelajar.index');
-
-    Route::view('/notifikasi', 'coming-soon')
-        ->name('notifikasi.index');
 
     Route::get('/progres', [ProgresController::class, 'index'])->name('progres.index');
 

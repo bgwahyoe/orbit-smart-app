@@ -16,6 +16,9 @@ class ProgresController extends Controller
         $totalTugas = DB::table('tugas')->where('user_id', $userId)->count();
         $tugasSelesai = DB::table('tugas')->where('user_id', $userId)->where('status', 'selesai')->count();
 
+        // Mengambil target mingguan (contoh: 80%)
+        $targetMingguan = 80; // atau ambil dari perhitungan
+
         // Hitung persentase progres
         $persentase = $totalTugas > 0 ? round(($tugasSelesai / $totalTugas) * 100) : 0;
 

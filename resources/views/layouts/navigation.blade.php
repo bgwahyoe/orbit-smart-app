@@ -4,10 +4,15 @@
         <div class="h-20 flex items-center justify-between">
 
             <!-- Logo -->
-            <a href="#" class="text-[#AC2471] text-2xl font-bold flex items-center gap-2">
-                <i class="fas fa-satellite-dish"></i>
-                Orbit
-            </a>
+           <a href="{{ route('nama.route') }}" 
+   class="flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 font-bold 
+   !opacity-100 
+   {{ request()->routeIs('nama.route') 
+      ? 'bg-[#EC4899] text-white' 
+      : 'text-white hover:bg-[#2A2A2A] hover:text-white' }}">
+
+   <span>Nama Menu</span>
+</a>
 
             <!-- Desktop Menu -->
             <ul class="hidden lg:flex items-center gap-10 text-sm font-semibold">
