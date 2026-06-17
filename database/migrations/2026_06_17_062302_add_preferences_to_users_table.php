@@ -1,31 +1,36 @@
 <?php
 
-namespace App\Http\Controllers;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Http\Request;
-
-class PengaturanController extends Controller
+return new class extends Migration
 {
-    public function update(Request $request)
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . auth()->id(),
-            'bio' => 'nullable|string|max:1000',
-        ]);
-
-        $user = auth()->user();
-
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->bio = $request->bio;
-
-        $user->notif_email = $request->has('notif_email');
-        $user->dark_mode = $request->has('dark_mode');
-        $user->reminder_tugas = $request->has('reminder_tugas');
-
-        $user->save();
-
-        return back()->with('success', 'Pengaturan berhasil diperbarui.');
+        Schema::table('users', function (Blueprint $table) {
+            $table->text('bio')->nullable();
+            $table->boolean('notif_email')->default(false);
+            $table->boolean('dark_mode')->default(false);
+            $table->boolean('reminder_tugas')->default(false);
+        });
     }
-}
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn([
+                'bio', 
+                'notif_email', 
+                'dark_mode', 
+                'reminder_tugas'
+            ]);
+        });
+    }
+};
