@@ -3,7 +3,6 @@ nixPkgs = ["...", "php82Extensions.pdo_mysql", "php82Extensions.mysqlnd"]
 
 [phases.build]
 cmds = [
-    "mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs bootstrap/cache && chmod -R a+rw storage",
     "composer install --optimize-autoloader --no-interaction --no-progress",
     "npm ci",
     "npm run build",
@@ -11,4 +10,5 @@ cmds = [
 ]
 
 [start]
-cmd = "php artisan config:clear && php artisan config:cache && php artisan migrate:fresh --force && /start-container.sh"
+# Perintah migrasi pindah ke sini agar dijalankan saat container sudah punya akses ke MySQL
+cmd = "php artisan migrate:fresh --force && /start-container.sh"
