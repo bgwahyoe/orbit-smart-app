@@ -5,10 +5,9 @@ nixPkgs = ["...", "php82Extensions.pdo_mysql", "php82Extensions.mysqlnd"]
 cmds = [
     "composer install --optimize-autoloader --no-interaction --no-progress",
     "npm ci",
-    "npm run build",
-    "php artisan view:cache"
+    "npm run build"
 ]
 
 [start]
-# Perintah migrasi pindah ke sini agar dijalankan saat container sudah punya akses ke MySQL
-cmd = "php artisan migrate:fresh --force && /start-container.sh"
+# Kita buat file .env secara instan menggunakan variabel dari Railway
+cmd = "echo 'DB_CONNECTION=mysql\nDB_HOST='${{MySQL.MYSQLHOST}}'\nDB_PORT='${{MySQL.MYSQLPORT}}'\nDB_DATABASE='${{MySQL.MYSQLDATABASE}}'\nDB_USERNAME='${{MySQL.MYSQLUSER}}'\nDB_PASSWORD='${{MySQL.MYSQLPASSWORD}} > .env && php artisan migrate:fresh --force && /start-container.sh"
