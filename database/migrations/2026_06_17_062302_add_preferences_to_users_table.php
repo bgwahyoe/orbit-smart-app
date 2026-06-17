@@ -6,31 +6,48 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('bio')->nullable();
-            $table->boolean('notif_email')->default(false);
-            $table->boolean('dark_mode')->default(false);
-            $table->boolean('reminder_tugas')->default(false);
+
+            if (!Schema::hasColumn('users', 'bio')) {
+                $table->text('bio')->nullable();
+            }
+
+            if (!Schema::hasColumn('users', 'notif_email')) {
+                $table->boolean('notif_email')->default(false);
+            }
+
+            if (!Schema::hasColumn('users', 'dark_mode')) {
+                $table->boolean('dark_mode')->default(false);
+            }
+
+            if (!Schema::hasColumn('users', 'reminder_tugas')) {
+                $table->boolean('reminder_tugas')->default(false);
+            }
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn([
-                'bio', 
-                'notif_email', 
-                'dark_mode', 
+
+            $columns = [];
+
+            foreach ([
+                'bio',
+                'notif_email',
+                'dark_mode',
                 'reminder_tugas'
-            ]);
+            ] as $column) {
+                if (Schema::hasColumn('users', $column)) {
+                    $columns[] = $column;
+                }
+            }
+
+            if (!empty($columns)) {
+                $table->dropColumn($columns);
+            }
         });
     }
 };
