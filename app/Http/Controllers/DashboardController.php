@@ -2,82 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tugas;
 use App\Models\Jadwal;
+use App\Models\Tugas;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        $userId = auth()->id();
 
-        $totalTugas = Tugas::where('user_id', $user->id)->count();
+        // Total tugas
+        $totalTugas = Tugas::where('user_id', $userId)->count();
 
-        $tugasSelesai = Tugas::where('user_id', $user->id)
+        // Tugas selesai
+        $tugasSelesai = Tugas::where('user_id', $userId)
             ->where('status', 'selesai')
             ->count();
 
-        $deadlineTerdekat = Tugas::where('user_id', $user->id)
+        // Deadline terdekat
+        $deadlineTerdekat = Tugas::where('user_id', $userId)
             ->where('status', '!=', 'selesai')
-            ->count();
+            ->whereDate('deadline', '>=', today())
+            ->orderBy('deadline', 'asc')
+            ->first();
 
-        $aktivitasHariIni = Jadwal::where('user_id', $user->id)
+        // Aktivitas hari ini
+        $aktivitasHariIni = Jadwal::where('user_id', $userId)
             ->whereDate('tanggal', today())
             ->count();
 
-        // TAMBAHKAN INI
-        $prioritas = Tugas::where('user_id', $user->id)
+        // Prioritas tugas
+        $prioritas = Tugas::where('user_id', $userId)
             ->where('status', '!=', 'selesai')
             ->orderBy('deadline', 'asc')
             ->take(5)
             ->get();
+
+        // Deadline mendatang
+        $deadlineMendatang = Tugas::where('user_id', $userId)
+            ->where('status', '!=', 'selesai')
+            ->whereDate('deadline', '>=', today())
+            ->orderBy('deadline', 'asc')
+            ->take(3)
+            ->get();
+
+        // Persentase produktivitas
+        $persentaseProduktivitas = $totalTugas > 0
+            ? round(($tugasSelesai / $totalTugas) * 100)
+            : 0;
+
+        // Tanggal tugas untuk kalender
+        $tanggalTugas = Tugas::where('user_id', $userId)
+            ->pluck('deadline')
+            ->map(function ($deadline) {
+                return Carbon::parse($deadline)->day;
+            })
+            ->toArray();
 
         return view('dashboard', compact(
             'totalTugas',
             'tugasSelesai',
             'deadlineTerdekat',
             'aktivitasHariIni',
-            'prioritas'
+            'prioritas',
+            'deadlineMendatang',
+            'persentaseProduktivitas',
+            'tanggalTugas'
         ));
     }
 }
-
-$totalTugas = Tugas::where(
-    'user_id',
-    auth()->id()
-)->count();
-
-$tugasSelesai = Tugas::where(
-    'user_id',
-    auth()->id()
-)->where(
-        'status',
-        'selesai'
-    )->count();
-
-$deadlineTerdekat = Tugas::where(
-    'user_id',
-    auth()->id()
-)->where(
-        'status',
-        '!=',
-        'selesai'
-    )->count();
-
-$prioritas = Tugas::where(
-    'user_id',
-    auth()->id()
-)
-    ->orderBy('deadline')
-    ->take(5)
-    ->get();
-
-return view(
-    'dashboard',
-    compact(
-        'totalTugas',
-        'tugasSelesai',
-        'deadlineTerdekat',
-        'prioritas'
-    )
-);

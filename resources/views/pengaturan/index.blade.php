@@ -1,290 +1,311 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@section('content')
 
-    <title>Pengaturan Orbit</title>
+    <div class="max-w-7xl mx-auto space-y-8">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <script>
-        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    </script>
-
-    <style>
-        /* PENGATURAN WARNA FORMAT KONTRAST TINGGI (DARK MODE FORCE) */
-        html.dark body {
-            background-color: #121212 !important;
-            color: #FFFFFF !important;
-        }
-        html.dark aside {
-            background-color: #1A1A1A !important;
-            border-color: #2D2D2D !important;
-        }
-        html.dark main {
-            background-color: #121212 !important;
-        }
-        html.dark .bg-white {
-            background-color: #1A1A1A !important;
-            border-color: #2D2D2D !important;
-        }
-        html.dark input {
-            background-color: #262626 !important;
-            color: #FFFFFF !important;
-            border-color: #404040 !important;
-        }
-        
-        /* Selektor spesifik untuk memaksa teks pembungkus judul tetap putih di mode gelap */
-        html.dark h1,
-        html.dark h1.text-5xl,
-        html.dark h1.text-2xl,
-        html.dark h2,
-        html.dark p,
-        html.dark label,
-        html.dark span,
-        html.dark .text-gray-500,
-        html.dark .text-gray-900,
-        html.dark .text-gray-700,
-        html.dark .text-gray-800 {
-            color: #FFFFFF !important;
-        }
-
-        /* Selektor khusus agar class teks bawaan tailwind yang mengunci warna gelap ikut hancur */
-        html.dark .text-\[\#1E1E1E\] {
-            color: #FFFFFF !important;
-        }
-
-        /* Warna khusus penanda utama sistem Orbit */
-        html.dark .text-\[\#AC2471\] {
-            color: #FF69B4 !important;
-        }
-
-        /* Mengatur hover baris preferensi di mode gelap */
-        html.dark .preference-row {
-            background-color: #262626 !important;
-            border-color: #374151 !important;
-        }
-        html.dark .preference-row:hover {
-            background-color: #323232 !important;
-        }
-        html.dark .border-gray-100 {
-            border-color: #2D2D2D !important;
-        }
-    </style>
-</head>
-
-<body class="font-[Poppins] bg-[#F6F7FB] text-[#1E1E1E] dark:bg-[#121212] dark:text-white transition-colors duration-200">
-
-<div class="flex min-h-screen">
-
-    <aside class="w-[280px] bg-white border-r border-gray-100 flex flex-col transition-colors duration-200">
-
-        <div class="px-8 pt-8">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-[#FF69B4] to-[#AC2471] flex items-center justify-center text-white">
-                    ✨
-                </div>
-                <div>
-                    <h2 class="font-bold text-2xl text-[#AC2471]">Orbit</h2>
-                    <p class="text-sm font-bold text-gray-500">Manajer Akademik</p>
-                </div>
-            </div>
-        </div>
-
-        <nav class="mt-10 px-5 space-y-2">
-            <a href="{{ route('dashboard') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-bold text-gray-800 hover:bg-pink-50">
-                <i class="fa-solid fa-table-columns"></i> Dashboard
-            </a>
-            <a href="{{ route('tugas.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-bold text-gray-800 hover:bg-pink-50">
-                <i class="fa-regular fa-clipboard"></i> Tugas
-            </a>
-            <a href="{{ route('prioritas.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-bold text-gray-800 hover:bg-pink-50">
-                <i class="fa-solid fa-bolt"></i> Prioritas Pintar
-            </a>
-            <a href="{{ route('kalender.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-bold text-gray-800 hover:bg-pink-50">
-                <i class="fa-regular fa-calendar"></i> Kalender
-            </a>
-            <a href="{{ route('rekomendasibelajar.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-bold text-gray-800 hover:bg-pink-50">
-                <i class="fa-solid fa-graduation-cap"></i> Rekomendasi Belajar
-            </a>
-            <a href="{{ route('notifikasi.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-bold text-gray-800 hover:bg-pink-50">
-                <i class="fa-regular fa-bell"></i> Notifikasi
-            </a>
-            <a href="{{ route('progres.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-bold text-gray-800 hover:bg-pink-50">
-                <i class="fa-solid fa-chart-column"></i> Progres
-            </a>
-            <a href="{{ route('pengaturan.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-bold bg-[#FF69B4] text-white shadow-sm">
-                <i class="fa-solid fa-gear"></i> Pengaturan
-            </a>
-        </nav>
-
-        <div class="mt-auto p-6">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="w-full bg-gradient-to-r from-[#FF69B4] to-[#AC2471] text-white py-4 rounded-xl font-bold shadow-md">
-                    <i class="fa-solid fa-right-from-bracket mr-2"></i> Keluar
-                </button>
-            </form>
-        </div>
-
-    </aside>
-
-    <main class="flex-1 bg-[#F6F7FB] transition-colors duration-200">
-
-        <div class="h-20 bg-white border-b border-gray-100 px-10 flex items-center justify-between transition-colors duration-200">
-            <h1 class="text-2xl font-bold text-[#AC2471]">Pengaturan</h1>
-            <div class="flex items-center gap-6">
-                <button class="text-[#AC2471] text-xl">
-                    <i class="fa-regular fa-bell"></i>
-                </button>
-                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF69B4] to-[#AC2471] flex items-center justify-center text-white font-bold">
-                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                </div>
-            </div>
-        </div>
-
-        <div class="p-10">
+        {{-- HEADER --}}
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
 
             <div>
-                <h1 class="text-5xl font-extrabold text-[#1E1E1E]">Pengaturan Akun</h1>
-                <p class="text-gray-500 font-bold mt-3 text-xl">Kelola profil, keamanan, dan preferensi aplikasi Orbit.</p>
+                <h1 class="text-3xl font-bold text-gray-900">
+                    Preferensi Akun
+                </h1>
+
+                <p class="mt-2 text-gray-500 dark:text-gray-400">
+                    Kelola profil, keamanan, dan pengalaman aplikasi Anda.
+                </p>
             </div>
 
-            @if(session('success'))
-                <div class="mt-6 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-3 shadow-md">
-                    <i class="fa-solid fa-circle-check text-2xl text-emerald-600"></i>
-                    <span class="text-lg font-bold text-emerald-800" style="color: #065f46 !important;">{{ session('success') }}</span>
+            <div class="bg-white dark:bg-[#1A1A1A] p-2 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+
+                <div class="flex gap-2 text-sm font-semibold">
+
+                    <button class="px-6 py-3 rounded-xl bg-pink-50 dark:bg-pink-500/20 text-[#AC2471]">
+                        Profil
+                    </button>
                 </div>
-            @endif
 
-            <form method="POST" action="{{ route('pengaturan.update') }}" class="mt-10">
-                @csrf
-
-                <div class="bg-white rounded-[24px] p-8 shadow-md transition-colors duration-200">
-
-                    <div class="mb-8">
-                        <div class="flex items-center gap-3 mb-6">
-                            <i class="fa-solid fa-user text-2xl text-[#AC2471]"></i>
-                            <h2 class="text-2xl font-extrabold text-[#AC2471]">Profil</h2>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="text-gray-900 font-extrabold text-base">Nama</label>
-                                <input type="text" name="name" value="{{ auth()->user()->name }}" class="w-full mt-2 h-14 px-4 rounded-xl border-2 border-gray-200 font-bold focus:ring-2 focus:ring-[#FF69B4] outline-none">
-                            </div>
-
-                            <div>
-                                <label class="text-gray-900 font-extrabold text-base">Email</label>
-                                <input type="email" name="email" value="{{ auth()->user()->email }}" class="w-full mt-2 h-14 px-4 rounded-xl border-2 border-gray-200 font-bold focus:ring-2 focus:ring-[#FF69B4] outline-none">
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="border-gray-100 my-8">
-
-                    <div>
-                        <div class="flex items-center gap-3 mb-6">
-                            <i class="fa-solid fa-sliders text-2xl text-[#AC2471]"></i>
-                            <h2 class="text-2xl font-extrabold text-[#AC2471]">Preferensi</h2>
-                        </div>
-
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between p-5 rounded-xl bg-gray-50/50 hover:bg-gray-100 cursor-pointer select-none preference-row border border-gray-100 transition-all">
-                                <span class="text-gray-900 font-extrabold text-lg">Notifikasi Email</span>
-                                <div class="relative flex items-center">
-                                    <input type="checkbox" name="notif_email" class="sr-only peer" {{ auth()->user()->notif_email ? 'checked' : '' }}>
-                                    <div class="w-7 h-7 border-2 border-gray-400 rounded-lg flex items-center justify-center peer-checked:bg-gradient-to-r peer-checked:from-[#FF69B4] peer-checked:to-[#AC2471] peer-checked:border-transparent transition-all shadow-sm">
-                                        <i class="fa-solid fa-check text-white text-sm hidden peer-checked:block"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center justify-between p-5 rounded-xl bg-gray-50/50 hover:bg-gray-100 cursor-pointer select-none preference-row border border-gray-100 transition-all">
-                                <span class="text-gray-900 font-extrabold text-lg">Mode Gelap</span>
-                                <div class="relative flex items-center">
-                                    <input type="checkbox" name="dark_mode" class="sr-only peer" {{ auth()->user()->dark_mode ? 'checked' : '' }}>
-                                    <div class="w-7 h-7 border-2 border-gray-400 rounded-lg flex items-center justify-center peer-checked:bg-gradient-to-r peer-checked:from-[#FF69B4] peer-checked:to-[#AC2471] peer-checked:border-transparent transition-all shadow-sm">
-                                        <i class="fa-solid fa-check text-white text-sm hidden peer-checked:block"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center justify-between p-5 rounded-xl bg-gray-50/50 hover:bg-gray-100 cursor-pointer select-none preference-row border border-gray-100 transition-all">
-                                <span class="text-gray-900 font-extrabold text-lg">Reminder Tugas</span>
-                                <div class="relative flex items-center">
-                                    <input type="checkbox" name="reminder_tugas" class="sr-only peer" {{ auth()->user()->reminder_tugas ? 'checked' : '' }}>
-                                    <div class="w-7 h-7 border-2 border-gray-400 rounded-lg flex items-center justify-center peer-checked:bg-gradient-to-r peer-checked:from-[#FF69B4] peer-checked:to-[#AC2471] peer-checked:border-transparent transition-all shadow-sm">
-                                        <i class="fa-solid fa-check text-white text-sm hidden peer-checked:block"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-end mt-10">
-                        <button type="submit" class="bg-gradient-to-r from-[#FF69B4] to-[#AC2471] hover:from-[#AC2471] hover:to-[#FF69B4] text-white px-10 py-4 rounded-xl font-bold text-lg transition shadow-md hover:shadow-lg">
-                            Simpan Perubahan
-                        </button>
-                    </div>
-
-                </div>
-            </form>
+            </div>
 
         </div>
-    </main>
 
-</div>
+        @if(session('success'))
+            <div
+                class="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 px-6 py-4 rounded-2xl">
+                {{ session('success') }}
+            </div>
+        @endif
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const rows = document.querySelectorAll('.preference-row');
-        const darkModeCheckbox = document.querySelector('input[name="dark_mode"]');
-        const htmlElement = document.documentElement;
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-        function pemicuDarkMode(isChecked) {
-            if (isChecked) {
-                htmlElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                htmlElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            }
-        }
+            {{-- KIRI --}}
+            <div class="xl:col-span-2 space-y-6">
 
-        if (darkModeCheckbox) {
-            pemicuDarkMode(darkModeCheckbox.checked);
+                <div class="bg-white border border-gray-200 rounded-[24px] p-8 shadow-sm">
 
-            darkModeCheckbox.addEventListener('change', function () {
-                pemicuDarkMode(this.checked);
-            });
-        }
+                    {{-- HEADER --}}
+                    <div class="flex items-center gap-3 mb-8">
 
-        rows.forEach(row => {
-            row.addEventListener('click', function (e) {
-                const checkbox = this.querySelector('input[type="checkbox"]');
-                
-                if (e.target !== checkbox) {
-                    checkbox.checked = !checkbox.checked;
-                    
-                    const event = new Event('change', { bubbles: true });
-                    checkbox.dispatchEvent(event);
+                        <div class="w-12 h-12 rounded-2xl bg-pink-50 dark:bg-pink-500/10 flex items-center justify-center">
+                            <i class="fa-regular fa-user text-[#AC2471] text-xl"></i>
+                        </div>
+
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900">
+                                Edit Profil
+                            </h2>
+
+                            <p class="text-sm text-gray-500 mt-1">
+                                Perbarui informasi profil Anda.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <form method="POST" action="{{ route('pengaturan.update') }}">
+                        @csrf
+
+                        <div class="grid md:grid-cols-2 gap-6">
+
+                            {{-- NAMA --}}
+                            <div>
+                                <label class="block mb-2 text-sm font-semibold text-gray-700">
+                                    Nama Lengkap
+                                </label>
+
+                                <input type="text" name="name" value="{{ old('name', auth()->user()->name) }}" class="w-full h-14 px-4 rounded-xl
+                                                    bg-gray-50
+                                                    border border-gray-200
+                                                    text-gray-900">
+                            </div>
+
+                            {{-- EMAIL --}}
+                            <div>
+                                <label class="block mb-2 text-sm font-semibold text-gray-700">
+                                    Email
+                                </label>
+
+                                <input type="email" name="email" value="{{ old('email', auth()->user()->email) }}" class="w-full h-14 px-4 rounded-xl
+                    bg-gray-50
+                    border border-gray-200
+                    text-gray-900">
+                            </div>
+
+                        </div>
+
+                        {{-- BIO --}}
+                        <div class="mt-6">
+
+                            <label class="block mb-2 text-sm font-semibold text-gray-700">
+                                Biografi
+                            </label>
+
+                            <textarea rows="5" name="bio" placeholder="Ceritakan sedikit tentang diri Anda..." class="w-full p-4 rounded-xl
+    bg-gray-50
+    border border-gray-200
+    text-gray-900
+    placeholder:text-gray-400
+    focus:ring-2 focus:ring-[#FF69B4]
+    focus:border-transparent
+    transition-all outline-none resize-none">{{ old('bio', auth()->user()->bio) }}</textarea>
+
+                        </div>
+
+                        {{-- BUTTON --}}
+                        <div class="border-t border-gray-200 dark:border-gray-800 mt-8 pt-6 flex justify-end gap-4">
+
+                            <button type="reset"
+                                class="px-6 py-3 rounded-xl border border-gray-200
+text-gray-600
+hover:bg-gray-50">
+                                Batal
+                            </button>
+
+                            <button type="submit" class="px-8 py-3 rounded-xl
+                                                                                               bg-gradient-to-r from-[#FF69B4] to-[#AC2471]
+                                                                                               text-white font-semibold
+                                                                                               shadow-md hover:shadow-lg
+                                                                                               hover:scale-[1.02]
+                                                                                               transition-all">
+                                Simpan Perubahan
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
+            {{-- KANAN --}}
+            <div class="space-y-6">
+
+                {{-- TEMA --}}
+                <div class="bg-white border border-gray-200 rounded-[24px] p-6 shadow-sm">
+
+                    <h3 class="font-bold text-lg text-gray-900 mb-5">
+                        🎨 Tema Tampilan
+                    </h3>
+
+                    <div class="grid grid-cols-2 gap-4">
+
+                        <button id="lightMode" class="theme-btn rounded-2xl p-5 text-center border-2">
+
+                            <div class="w-16 h-12 rounded-xl bg-pink-50 flex items-center justify-center mx-auto mb-3">
+                                ☀️
+                            </div>
+
+                            <p class="font-semibold">
+                                Mode Terang
+                            </p>
+
+                        </button>
+
+                        <button id="darkMode" class="theme-btn rounded-2xl p-5 text-center border-2">
+
+                            <div class="w-16 h-12 rounded-xl bg-[#1A1A1A] flex items-center justify-center mx-auto mb-3">
+                                🌙
+                            </div>
+
+                            <p class="font-semibold">
+                                Mode Gelap
+                            </p>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                {{-- NOTIFIKASI --}}
+                <div class="bg-white border border-gray-200 rounded-[24px] p-6 shadow-sm">
+
+                    <h3 class="font-bold text-lg text-gray-900 mb-6">
+                        🔔 Pengaturan Notifikasi
+                    </h3>
+
+                    <div class="space-y-5">
+
+                        <div class="flex items-center justify-between">
+
+                            <div>
+                                <p class="font-medium text-gray-900">
+                                    Pengingat Tugas
+                                </p>
+
+                                <p class="text-sm text-gray-500">
+                                    Beritahu saya 24 jam sebelum deadline
+                                </p>
+                            </div>
+
+                            <input type="checkbox" checked>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+
+                            <div>
+                                <p class="font-medium text-gray-900">
+                                    Perubahan Jadwal
+                                </p>
+
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    Pembaruan kalender akademik
+                                </p>
+                            </div>
+
+                            <input type="checkbox" checked>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const html = document.documentElement;
+
+            const lightBtn = document.getElementById('lightMode');
+            const darkBtn = document.getElementById('darkMode');
+
+            function updateButtons() {
+
+                const isDark = html.classList.contains('dark');
+
+                if (isDark) {
+
+                    darkBtn.classList.add(
+                        'border-[#AC2471]',
+                        'text-[#AC2471]'
+                    );
+
+                    darkBtn.classList.remove(
+                        'border-gray-200',
+                        'dark:border-gray-700',
+                        'text-gray-500'
+                    );
+
+                    lightBtn.classList.remove(
+                        'border-[#AC2471]',
+                        'text-[#AC2471]'
+                    );
+
+                    lightBtn.classList.add(
+                        'border-gray-200',
+                        'dark:border-gray-700',
+                        'text-gray-500'
+                    );
+
+                } else {
+
+                    lightBtn.classList.add(
+                        'border-[#AC2471]',
+                        'text-[#AC2471]'
+                    );
+
+                    lightBtn.classList.remove(
+                        'border-gray-200',
+                        'dark:border-gray-700',
+                        'text-gray-500'
+                    );
+
+                    darkBtn.classList.remove(
+                        'border-[#AC2471]',
+                        'text-[#AC2471]'
+                    );
+
+                    darkBtn.classList.add(
+                        'border-gray-200',
+                        'dark:border-gray-700',
+                        'text-gray-500'
+                    );
                 }
-            });
-        });
-    });
-</script>
+            }
 
-</body>
-</html>
+            lightBtn.addEventListener('click', function () {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                updateButtons();
+            });
+
+            darkBtn.addEventListener('click', function () {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                updateButtons();
+            });
+
+            updateButtons();
+        });
+    </script>
+
+@endsection

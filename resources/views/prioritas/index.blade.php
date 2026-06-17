@@ -1,306 +1,179 @@
 @extends('layouts.app')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>Prioritas Pintar - Orbit</title>
 
-<title>Prioritas Pintar</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-@vite(['resources/css/app.css','resources/js/app.js'])
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
-
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body class="font-[Poppins] bg-[#F6F7FB]">
 
-<div class="flex min-h-screen">
+    <div class="flex min-h-screen">
 
-    {{-- SIDEBAR --}}
-    <aside class="w-[280px] bg-white border-r border-gray-100 flex flex-col">
+        <!-- CONTENT -->
+        <main class="flex-1">
 
-            <!-- LOGO -->
-            <div class="px-8 pt-8">
+            <!-- BODY -->
+            <div class="p-10">
 
-                <div class="flex items-center gap-3">
-
-                    <div
-                        class="w-12 h-12 rounded-xl bg-gradient-to-r from-[#FF69B4] to-[#AC2471] flex items-center justify-center text-white">
-                        ✨
-                    </div>
-
-                    <div>
-                        <h2 class="font-bold text-2xl text-[#AC2471]">
-                            Orbit
-                        </h2>
-
-                        <p class="text-sm text-gray-500">
-                            Manajer Akademik
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- MENU -->
-            <nav class="mt-10 px-5 space-y-2">
-
-                <!-- Dashboard -->
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('dashboard') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
-
-                    <i class="fa-solid fa-table-columns"></i>
-                    Dashboard
-
-                </a>
-
-                <!-- Tugas -->
-                <a href="{{ route('tugas.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('tugas.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
-
-                    <i class="fa-regular fa-clipboard"></i>
-                    Tugas
-
-                </a>
-
-                <!-- Prioritas -->
-                <a href="{{ route('prioritas.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('prioritas.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
-
-                    <i class="fa-solid fa-bolt"></i>
+                <h1 class="text-6xl font-extrabold text-[#AC2471]">
                     Prioritas Pintar
+                </h1>
 
-                </a>
+                <p class="text-xl text-gray-500 mt-4 max-w-4xl">
+                    Ranking prioritas tugas berdasarkan AI. Kami menganalisis
+                    deadline, status pengerjaan, dan aktivitas belajar Anda.
+                </p>
 
-                <!-- Kalender -->
-                <a href="{{ route('kalender.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('kalender.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
+                <div class="grid grid-cols-12 gap-8 mt-10">
 
-                    <i class="fa-regular fa-calendar"></i>
-                    Kalender
+                    <!-- LIST PRIORITAS -->
+                    <div class="col-span-8 space-y-6">
 
-                </a>
+                        @forelse($prioritas as $item)
 
-                <!-- Rekomendasi Belajar -->
-                <a href="{{ route('rekomendasibelajar.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('rekomendasibelajar.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
+                            <div class="bg-white rounded-[32px] shadow-sm overflow-hidden">
 
-                    <i class="fa-solid fa-graduation-cap"></i>
-                    Rekomendasi Belajar
+                                <div class="flex justify-between items-center gap-8 p-8 border-l-[6px]
+                                    {{ $item->skor >= 80 ? 'border-[#C0267A]' : ($item->skor >= 50 ? 'border-orange-400' : 'border-blue-400') }}">
 
-                </a>
+                                    <div class="flex-1 min-w-0">
 
-                <!-- Notifikasi -->
-                <a href="{{ route('notifikasi.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('notifikasi.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
+                                        <h3 class="text-4xl font-bold leading-tight">
+                                            {{ $item->judul }}
+                                        </h3>
 
-                    <i class="fa-regular fa-bell"></i>
-                    Notifikasi
+                                        <div class="flex gap-3 mt-5">
 
-                </a>
+                                            <span class="px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm">
 
-                <!-- Progres -->
-                <a href="{{ route('progres.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('progres.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
+                                                <i class="fa-regular fa-clock mr-1"></i>
 
-                    <i class="fa-solid fa-chart-column"></i>
-                    Progres
+                                                Deadline
+                                                {{ \Carbon\Carbon::parse($item->deadline)->format('d M Y') }}
 
-                </a>
+                                            </span>
 
-                <!-- Pengaturan -->
-                <a href="{{ route('pengaturan.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('pengaturan.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
+                                            <span class="px-4 py-2 rounded-full text-sm font-medium
+                                                {{ $item->skor >= 80
+                                                    ? 'bg-pink-100 text-[#C0267A]'
+                                                    : ($item->skor >= 50
+                                                        ? 'bg-orange-100 text-orange-600'
+                                                        : 'bg-blue-100 text-blue-600') }}">
 
-                    <i class="fa-solid fa-gear"></i>
-                    Pengaturan
+                                                {{ $item->skor >= 80
+                                                    ? 'Prioritas Tinggi'
+                                                    : ($item->skor >= 50
+                                                        ? 'Prioritas Sedang'
+                                                        : 'Prioritas Rendah') }}
 
-                </a>
+                                            </span>
 
-            </nav>
+                                        </div>
 
-            <!-- LOGOUT -->
-            <div class="mt-auto p-6">
+                                    </div>
 
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
+                                    <div class="text-right shrink-0">
 
-                    <button
-                        class="w-full bg-gradient-to-r from-[#FF69B4] to-[#AC2471] text-white py-4 rounded-xl font-semibold">
+                                        <h2 class="text-[72px] font-extrabold text-[#C0267A] leading-none">
 
-                        <i class="fa-solid fa-right-from-bracket mr-2"></i>
-                        Keluar
+                                            {{ round($item->skor) }}
 
-                    </button>
+                                        </h2>
 
-                </form>
+                                        <p class="text-sm uppercase tracking-wide text-gray-400 mt-2">
+                                            Skor Prioritas
+                                        </p>
 
-            </div>
+                                    </div>
 
-        </aside>
+                                </div>
 
-    <main class="flex-1">
+                            </div>
 
-        {{-- TOPBAR --}}
-        <div class="h-20 bg-white border-b px-10 flex items-center justify-between">
+                        @empty
 
-            <input
-                placeholder="Cari tugas..."
-                class="w-[320px] h-12 rounded-2xl border border-pink-200 px-5">
+                            <div class="bg-white rounded-[32px] p-12 text-center shadow-sm">
 
-            <div class="flex items-center gap-5">
+                                <i class="fa-regular fa-folder-open text-6xl text-gray-300"></i>
 
-                <i class="fa-regular fa-bell text-[#AC2471] text-xl"></i>
-
-                <div
-                    class="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF69B4] to-[#AC2471]
-                    flex items-center justify-center text-white font-bold">
-
-                    {{ strtoupper(substr(auth()->user()->name,0,1)) }}
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="p-10">
-
-            <h1
-                class="text-5xl font-bold text-[#AC2471]">
-
-                Prioritas Pintar
-
-            </h1>
-
-            <p
-                class="text-gray-500 text-xl mt-3 max-w-4xl">
-
-                Ranking prioritas tugas berdasarkan AI.
-                Kami menganalisis deadline dan aktivitas Anda.
-
-            </p>
-
-            {{-- LIST PRIORITAS --}}
-            <div class="grid grid-cols-3 gap-6 mt-10">
-
-                <div class="col-span-2 space-y-5">
-
-                    @foreach($prioritas as $item)
-
-                    <div
-                        class="bg-white rounded-[28px] p-8 shadow-sm border-l-4
-                        {{ $item->skor >= 80 ? 'border-pink-600' : ($item->skor >= 50 ? 'border-orange-400' : 'border-blue-400') }}">
-
-                        <div
-                            class="flex justify-between items-center">
-
-                            <div>
-
-                                <h3
-                                    class="text-3xl font-bold">
-
-                                    {{ $item->judul }}
-
-                                </h3>
-
-                                <p
-                                    class="text-gray-500 mt-2">
-
-                                    Deadline
-
-                                    {{ \Carbon\Carbon::parse($item->deadline)->format('d M Y') }}
-
+                                <p class="mt-5 text-gray-400 text-lg">
+                                    Belum ada tugas untuk dianalisis.
                                 </p>
 
                             </div>
 
-                            <div
-                                class="text-right">
+                        @endforelse
 
-                                <h2
-                                    class="text-5xl font-bold text-[#AC2471]">
+                    </div>
 
-                                    {{ $item->skor }}
+                    <!-- SIDEBAR KANAN -->
+                    <div class="col-span-4 space-y-6">
 
-                                </h2>
+                        <!-- URGENSI -->
+                        <div class="bg-white rounded-[32px] p-8 shadow-sm">
 
-                                <span
-                                    class="text-sm text-gray-500">
+                            <h3 class="text-3xl font-bold mb-6">
+                                Tingkat Urgensi
+                            </h3>
 
-                                    SKOR
+                            <div class="h-64 rounded-3xl bg-[#F9F1F5] relative">
 
-                                </span>
+                                <div class="absolute inset-0 grid grid-cols-2 grid-rows-2">
+
+                                    <div class="border-r border-b border-pink-100"></div>
+                                    <div class="border-b border-pink-100"></div>
+                                    <div class="border-r border-pink-100"></div>
+                                    <div></div>
+
+                                </div>
+
+                                <div class="absolute top-[38%] left-[62%]">
+
+                                    <div class="w-5 h-5 rounded-full bg-[#C0267A]"></div>
+
+                                </div>
 
                             </div>
 
                         </div>
 
-                    </div>
+                        <!-- KESEHATAN -->
+                        <div class="bg-white rounded-[32px] p-8 shadow-sm text-center">
 
-                    @endforeach
+                            <div class="w-44 h-44 mx-auto rounded-full border-[12px]
+                                border-[#C0267A] flex items-center justify-center">
 
-                </div>
+                                <div>
 
-                {{-- SIDEBAR KANAN --}}
-                <div class="space-y-6">
+                                    <h2 class="text-5xl font-extrabold text-[#C0267A]">
+                                        85%
+                                    </h2>
 
-                    <div
-                        class="bg-white rounded-[28px] p-8 shadow-sm">
+                                    <p class="text-gray-500">
+                                        Kesehatan
+                                    </p>
 
-                        <h3
-                            class="font-bold text-xl">
-
-                            Tingkat Urgensi
-
-                        </h3>
-
-                        <div
-                            class="h-56 mt-6 rounded-2xl bg-[#F7F2F5]
-                            flex items-center justify-center">
-
-                            <div
-                                class="w-6 h-6 bg-[#AC2471]
-                                rounded-full">
+                                </div>
 
                             </div>
 
-                        </div>
-
-                    </div>
-
-                    <div
-                        class="bg-white rounded-[28px] p-8 shadow-sm">
-
-                        <div
-                            class="w-40 h-40 rounded-full border-[10px]
-                            border-[#AC2471] mx-auto flex items-center
-                            justify-center">
-
-                            <div class="text-center">
-
-                                <h2
-                                    class="text-4xl font-bold text-[#AC2471]">
-
-                                    85%
-
-                                </h2>
-
-                                <p
-                                    class="text-sm">
-
-                                    Kesehatan
-
-                                </p>
-
-                            </div>
+                            <p class="mt-6 text-gray-500">
+                                Jadwal Anda masih seimbang dan terkendali.
+                            </p>
 
                         </div>
 
@@ -310,11 +183,11 @@ rel="stylesheet">
 
             </div>
 
-        </div>
+        </main>
 
-    </main>
-
-</div>
+    </div>
 
 </body>
+
 </html>
+@endsection

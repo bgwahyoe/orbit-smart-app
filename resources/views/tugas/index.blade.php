@@ -1,4 +1,6 @@
 @extends('layouts.app')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="id">
 
@@ -21,163 +23,8 @@
 
     <div class="flex min-h-screen">
 
-        <!-- SIDEBAR -->
-        <aside class="w-[280px] bg-white border-r border-gray-100 flex flex-col">
-
-            <!-- Logo -->
-            <div class="px-8 pt-8">
-
-                <div class="flex items-center gap-3">
-
-                    <div
-                        class="w-12 h-12 rounded-xl bg-gradient-to-r from-[#FF69B4] to-[#AC2471] flex items-center justify-center text-white">
-
-                        ✨
-
-                    </div>
-
-                    <div>
-
-                        <h2 class="font-bold text-2xl text-[#AC2471]">
-                            Orbit
-                        </h2>
-
-                        <p class="text-sm text-gray-500">
-                            Manajer Akademik
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- MENU -->
-            <nav class="mt-10 px-5 space-y-2">
-
-                <!-- Dashboard -->
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('dashboard') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
-
-                    <i class="fa-solid fa-table-columns"></i>
-                    Dashboard
-
-                </a>
-
-                <!-- Tugas -->
-                <a href="{{ route('tugas.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('tugas.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
-
-                    <i class="fa-regular fa-clipboard"></i>
-                    Tugas
-
-                </a>
-
-                <!-- Prioritas -->
-                <a href="{{ route('prioritas.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('prioritas.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
-
-                    <i class="fa-solid fa-bolt"></i>
-                    Prioritas Pintar
-
-                </a>
-
-                <!-- Kalender -->
-                <a href="{{ route('kalender.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('kalender.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
-
-                    <i class="fa-regular fa-calendar"></i>
-                    Kalender
-
-                </a>
-
-                <!-- Rekomendasi Belajar -->
-                <a href="{{ route('rekomendasibelajar.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('rekomendasibelajar.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
-
-                    <i class="fa-solid fa-graduation-cap"></i>
-                    Rekomendasi Belajar
-
-                </a>
-
-                <!-- Notifikasi -->
-                <a href="{{ route('notifikasi.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('notifikasi.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
-
-                    <i class="fa-regular fa-bell"></i>
-                    Notifikasi
-
-                </a>
-
-                <!-- Progres -->
-                <a href="{{ route('progres.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('progres.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
-
-                    <i class="fa-solid fa-chart-column"></i>
-                    Progres
-
-                </a>
-
-                <!-- Pengaturan -->
-                <a href="{{ route('pengaturan.index') }}" class="flex items-center gap-4 px-5 py-4 rounded-xl font-medium
-        {{ request()->routeIs('pengaturan.*') ? 'bg-[#FF69B4] text-white' : 'text-gray-700 hover:bg-pink-50' }}">
-
-                    <i class="fa-solid fa-gear"></i>
-                    Pengaturan
-
-                </a>
-
-            </nav>
-
-            <!-- LOGOUT -->
-            <div class="mt-auto p-6">
-
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <button
-                        class="w-full bg-gradient-to-r from-[#FF69B4] to-[#AC2471] text-white py-4 rounded-xl font-semibold">
-
-                        <i class="fa-solid fa-right-from-bracket mr-2"></i>
-                        Keluar
-
-                    </button>
-
-                </form>
-
-            </div>
-
-        </aside>
-
         <!-- CONTENT -->
         <main class="flex-1">
-
-            <!-- TOPBAR -->
-            <div class="h-20 bg-white border-b border-gray-100 px-10 flex items-center justify-between">
-
-                <div class="relative">
-
-                    <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-
-                    <input type="text" placeholder="Cari tugas..."
-                        class="w-[300px] h-12 rounded-2xl border border-pink-200 pl-12">
-
-                </div>
-
-                <div class="flex items-center gap-6">
-
-                    <i class="fa-regular fa-bell text-[#AC2471] text-xl"></i>
-
-                    <div
-                        class="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF69B4] to-[#AC2471] flex items-center justify-center text-white font-bold">
-
-                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-
-                    </div>
-
-                </div>
-
-            </div>
 
             <!-- BODY -->
             <div class="p-10">
@@ -342,3 +189,5 @@
 </body>
 
 </html>
+
+@endsection
