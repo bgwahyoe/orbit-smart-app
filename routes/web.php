@@ -33,6 +33,7 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth'])->group(function () {
 
     Route::resource('tugas', TugasController::class);
+    
     Route::resource('matakuliah', MataKuliahController::class);
 
     Route::get('/prioritas', [PrioritasController::class, 'index'])

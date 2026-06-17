@@ -79,10 +79,6 @@
                     </p>
                 </div>
 
-                <button class="bg-[#AC2471] text-white px-6 py-3 rounded-xl font-semibold">
-                    Lihat Laporan Detail
-                </button>
-
             </div>
 
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8">

@@ -95,10 +95,6 @@
                     Prioritaskan tugas ini karena memiliki skor fokus tertinggi.
                 </p>
 
-                <button class="mt-6 w-full bg-[#AC2471] text-white py-3 rounded-xl font-semibold">
-                    Mulai Sesi →
-                </button>
-
             @endif
 
         </div>

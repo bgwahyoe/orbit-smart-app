@@ -1,5 +1,6 @@
-<form action="{{ route('tugas.store') }}" method="POST">
+<form action="{{ route('tugas.update', $tugas->id) }}" method="POST">
     @csrf
+    @method('PUT')
 
     <div class="space-y-5">
 
@@ -11,9 +12,9 @@
             <input
                 type="text"
                 name="judul"
+                value="{{ old('judul', $tugas->judul) }}"
                 required
-                class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
-                placeholder="Contoh: Laporan Praktikum Basis Data">
+                class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400">
         </div>
 
         <div>
@@ -27,9 +28,15 @@
                 class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400">
 
                 @foreach($mataKuliah as $mk)
-                    <option value="{{ $mk->id }}">
+
+                    <option
+                        value="{{ $mk->id }}"
+                        {{ $mk->id == $tugas->mata_kuliah_id ? 'selected' : '' }}>
+
                         {{ $mk->nama }}
+
                     </option>
+
                 @endforeach
 
             </select>
@@ -43,8 +50,7 @@
             <textarea
                 name="deskripsi"
                 rows="4"
-                class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
-                placeholder="Tambahkan deskripsi tugas..."></textarea>
+                class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400">{{ old('deskripsi', $tugas->deskripsi) }}</textarea>
         </div>
 
         <div>
@@ -55,6 +61,7 @@
             <input
                 type="date"
                 name="deadline"
+                value="{{ \Carbon\Carbon::parse($tugas->deadline)->format('Y-m-d') }}"
                 required
                 class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400">
         </div>
@@ -68,9 +75,17 @@
                 name="status"
                 class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400">
 
-                <option value="belum">Belum</option>
-                <option value="proses">Proses</option>
-                <option value="selesai">Selesai</option>
+                <option value="belum" {{ $tugas->status == 'belum' ? 'selected' : '' }}>
+                    Belum
+                </option>
+
+                <option value="proses" {{ $tugas->status == 'proses' ? 'selected' : '' }}>
+                    Proses
+                </option>
+
+                <option value="selesai" {{ $tugas->status == 'selesai' ? 'selected' : '' }}>
+                    Selesai
+                </option>
 
             </select>
         </div>
@@ -79,7 +94,7 @@
             type="submit"
             class="w-full h-14 rounded-2xl bg-gradient-to-r from-[#FF69B4] to-[#AC2471] text-white font-semibold">
 
-            Simpan Tugas
+            Simpan Perubahan
 
         </button>
 

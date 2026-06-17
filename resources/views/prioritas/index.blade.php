@@ -1,149 +1,121 @@
 @extends('layouts.app')
 
 @section('content')
-<!DOCTYPE html>
-<html lang="id">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="space-y-8">
 
-    <title>Prioritas Pintar - Orbit</title>
+    {{-- HEADER --}}
+    <div>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <h1 class="text-5xl lg:text-6xl font-extrabold text-[#AC2471] tracking-tight">
+            Prioritas Pintar
+        </h1>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+        <p class="text-xl text-gray-500 mt-4 max-w-4xl leading-relaxed">
+            Ranking prioritas tugas berdasarkan AI. Kami menganalisis
+            deadline, status pengerjaan, dan aktivitas belajar Anda.
+        </p>
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-</head>
+    </div>
 
-<body class="font-[Poppins] bg-[#F6F7FB]">
+    {{-- GRID --}}
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
 
-    <div class="flex min-h-screen">
+        {{-- LIST PRIORITAS --}}
+        <div class="xl:col-span-8 space-y-6">
 
-        <!-- CONTENT -->
-        <main class="flex-1">
+            @forelse($prioritas as $item)
 
-            <!-- BODY -->
-            <div class="p-10">
+                <div
+                    class="bg-white rounded-[32px] shadow-sm hover:shadow-xl
+                           transition-all duration-300 overflow-hidden
+                           hover:-translate-y-1">
 
-                <h1 class="text-6xl font-extrabold text-[#AC2471]">
-                    Prioritas Pintar
-                </h1>
+                    <div
+                        class="relative p-8 border-l-[6px]
+                        {{ $item->skor >= 80 ? 'border-[#C0267A]' : ($item->skor >= 50 ? 'border-orange-400' : 'border-blue-400') }}">
 
-                <p class="text-xl text-gray-500 mt-4 max-w-4xl">
-                    Ranking prioritas tugas berdasarkan AI. Kami menganalisis
-                    deadline, status pengerjaan, dan aktivitas belajar Anda.
-                </p>
+                        {{-- BACKGROUND GLOW --}}
+                        <div
+                            class="absolute top-0 right-0 w-40 h-40 rounded-full blur-3xl opacity-10
+                            {{ $item->skor >= 80 ? 'bg-[#C0267A]' : ($item->skor >= 50 ? 'bg-orange-400' : 'bg-blue-400') }}">
+                        </div>
 
-                <div class="grid grid-cols-12 gap-8 mt-10">
+                        <div class="relative flex flex-col lg:flex-row justify-between gap-8">
 
-                    <!-- LIST PRIORITAS -->
-                    <div class="col-span-8 space-y-6">
+                            {{-- KONTEN --}}
+                            <div class="flex-1 min-w-0">
 
-                        @forelse($prioritas as $item)
+                                <div class="flex items-center gap-3 mb-5">
 
-                            <div class="bg-white rounded-[32px] shadow-sm overflow-hidden">
+                                    <div class="w-12 h-12 rounded-2xl bg-[#F9F1F5] flex items-center justify-center">
 
-                                <div class="flex justify-between items-center gap-8 p-8 border-l-[6px]
-                                    {{ $item->skor >= 80 ? 'border-[#C0267A]' : ($item->skor >= 50 ? 'border-orange-400' : 'border-blue-400') }}">
-
-                                    <div class="flex-1 min-w-0">
-
-                                        <h3 class="text-4xl font-bold leading-tight">
-                                            {{ $item->judul }}
-                                        </h3>
-
-                                        <div class="flex gap-3 mt-5">
-
-                                            <span class="px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm">
-
-                                                <i class="fa-regular fa-clock mr-1"></i>
-
-                                                Deadline
-                                                {{ \Carbon\Carbon::parse($item->deadline)->format('d M Y') }}
-
-                                            </span>
-
-                                            <span class="px-4 py-2 rounded-full text-sm font-medium
-                                                {{ $item->skor >= 80
-                                                    ? 'bg-pink-100 text-[#C0267A]'
-                                                    : ($item->skor >= 50
-                                                        ? 'bg-orange-100 text-orange-600'
-                                                        : 'bg-blue-100 text-blue-600') }}">
-
-                                                {{ $item->skor >= 80
-                                                    ? 'Prioritas Tinggi'
-                                                    : ($item->skor >= 50
-                                                        ? 'Prioritas Sedang'
-                                                        : 'Prioritas Rendah') }}
-
-                                            </span>
-
-                                        </div>
+                                        <i class="fa-solid fa-bolt text-[#C0267A]"></i>
 
                                     </div>
 
-                                    <div class="text-right shrink-0">
+                                    <p class="text-sm uppercase tracking-[0.2em] text-gray-400">
+                                        Analisis AI
+                                    </p>
 
-                                        <h2 class="text-[72px] font-extrabold text-[#C0267A] leading-none">
+                                </div>
 
-                                            {{ round($item->skor) }}
+                                <h3 class="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
 
-                                        </h2>
+                                    {{ $item->judul }}
 
-                                        <p class="text-sm uppercase tracking-wide text-gray-400 mt-2">
-                                            Skor Prioritas
-                                        </p>
+                                </h3>
 
-                                    </div>
+                                <div class="flex flex-wrap gap-3 mt-6">
+
+                                    <span class="px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm">
+
+                                        <i class="fa-regular fa-clock mr-2"></i>
+
+                                        Deadline
+                                        {{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('d M Y') }}
+
+                                    </span>
+
+                                    <span
+                                        class="px-4 py-2 rounded-full text-sm font-medium
+                                        {{ $item->skor >= 80
+                                            ? 'bg-pink-100 text-[#C0267A]'
+                                            : ($item->skor >= 50
+                                                ? 'bg-orange-100 text-orange-600'
+                                                : 'bg-blue-100 text-blue-600') }}">
+
+                                        {{ $item->skor >= 80
+                                            ? 'Prioritas Tinggi'
+                                            : ($item->skor >= 50
+                                                ? 'Prioritas Sedang'
+                                                : 'Prioritas Rendah') }}
+
+                                    </span>
 
                                 </div>
 
                             </div>
 
-                        @empty
+                            {{-- SKOR --}}
+                            <div class="text-right shrink-0">
 
-                            <div class="bg-white rounded-[32px] p-12 text-center shadow-sm">
+                                <h2 class="text-[64px] lg:text-[72px] font-extrabold text-[#C0267A] leading-none">
 
-                                <i class="fa-regular fa-folder-open text-6xl text-gray-300"></i>
+                                    {{ round($item->skor) }}
 
-                                <p class="mt-5 text-gray-400 text-lg">
-                                    Belum ada tugas untuk dianalisis.
+                                </h2>
+
+                                <p class="text-sm uppercase tracking-wide text-gray-400 mt-2">
+                                    Skor Prioritas
                                 </p>
 
-                            </div>
+                                <div class="w-32 h-2 rounded-full bg-pink-100 mt-4 ml-auto overflow-hidden">
 
-                        @endforelse
-
-                    </div>
-
-                    <!-- SIDEBAR KANAN -->
-                    <div class="col-span-4 space-y-6">
-
-                        <!-- URGENSI -->
-                        <div class="bg-white rounded-[32px] p-8 shadow-sm">
-
-                            <h3 class="text-3xl font-bold mb-6">
-                                Tingkat Urgensi
-                            </h3>
-
-                            <div class="h-64 rounded-3xl bg-[#F9F1F5] relative">
-
-                                <div class="absolute inset-0 grid grid-cols-2 grid-rows-2">
-
-                                    <div class="border-r border-b border-pink-100"></div>
-                                    <div class="border-b border-pink-100"></div>
-                                    <div class="border-r border-pink-100"></div>
-                                    <div></div>
-
-                                </div>
-
-                                <div class="absolute top-[38%] left-[62%]">
-
-                                    <div class="w-5 h-5 rounded-full bg-[#C0267A]"></div>
+                                    <div
+                                        class="h-full bg-gradient-to-r from-[#FF69B4] to-[#C0267A]"
+                                        style="width: {{ min($item->skor, 100) }}%">
+                                    </div>
 
                                 </div>
 
@@ -151,29 +123,85 @@
 
                         </div>
 
-                        <!-- KESEHATAN -->
-                        <div class="bg-white rounded-[32px] p-8 shadow-sm text-center">
+                    </div>
 
-                            <div class="w-44 h-44 mx-auto rounded-full border-[12px]
-                                border-[#C0267A] flex items-center justify-center">
+                </div>
 
-                                <div>
+            @empty
 
-                                    <h2 class="text-5xl font-extrabold text-[#C0267A]">
-                                        85%
-                                    </h2>
+                <div class="bg-white rounded-[32px] p-12 text-center shadow-sm">
 
-                                    <p class="text-gray-500">
-                                        Kesehatan
-                                    </p>
+                    <div class="w-20 h-20 mx-auto rounded-full bg-pink-100 flex items-center justify-center">
 
-                                </div>
+                        <i class="fa-regular fa-folder-open text-3xl text-[#AC2471]"></i>
 
-                            </div>
+                    </div>
 
-                            <p class="mt-6 text-gray-500">
-                                Jadwal Anda masih seimbang dan terkendali.
-                            </p>
+                    <h3 class="mt-5 text-2xl font-bold text-gray-900">
+                        Belum ada tugas
+                    </h3>
+
+                    <p class="mt-3 text-gray-500">
+                        Tambahkan tugas terlebih dahulu untuk mendapatkan analisis prioritas.
+                    </p>
+
+                </div>
+
+            @endforelse
+
+        </div>
+
+        {{-- SIDEBAR --}}
+        <div class="xl:col-span-4 space-y-6">
+
+            {{-- TINGKAT URGENSI --}}
+            <div class="bg-white rounded-[32px] p-8 shadow-sm">
+
+                <div class="flex items-center justify-between mb-6">
+
+                    <h3 class="text-2xl font-bold text-gray-900">
+                        Tingkat Urgensi
+                    </h3>
+
+                    <div class="w-12 h-12 rounded-2xl bg-pink-100 flex items-center justify-center">
+
+                        <i class="fa-solid fa-chart-line text-[#C0267A]"></i>
+
+                    </div>
+
+                </div>
+
+                <div class="h-64 rounded-3xl bg-[#F9F1F5] relative overflow-hidden">
+
+                    <div class="absolute inset-0 grid grid-cols-2 grid-rows-2">
+
+                        <div class="border-r border-b border-pink-100"></div>
+                        <div class="border-b border-pink-100"></div>
+                        <div class="border-r border-pink-100"></div>
+                        <div></div>
+
+                    </div>
+
+                    <div class="absolute inset-x-0 bottom-4 flex justify-between px-5 text-xs text-gray-400">
+
+                        <span>Rendah</span>
+                        <span>Tinggi</span>
+
+                    </div>
+
+                    <div class="absolute left-[-20px] top-1/2 -rotate-90 text-xs text-gray-400">
+
+                        Penting
+
+                    </div>
+
+                    <div class="absolute top-[38%] left-[62%]">
+
+                        <div class="relative flex items-center justify-center">
+
+                            <div class="absolute w-10 h-10 rounded-full bg-[#C0267A]/20 animate-ping"></div>
+
+                            <div class="w-5 h-5 rounded-full bg-[#C0267A]"></div>
 
                         </div>
 
@@ -183,11 +211,69 @@
 
             </div>
 
-        </main>
+            {{-- KESEHATAN --}}
+            <div class="bg-white rounded-[32px] p-8 shadow-sm text-center">
+
+                <div class="relative w-44 h-44 mx-auto">
+
+                    <svg class="w-full h-full -rotate-90">
+
+                        <circle
+                            cx="88"
+                            cy="88"
+                            r="70"
+                            stroke="#FCE7F3"
+                            stroke-width="14"
+                            fill="none" />
+
+                        <circle
+                            cx="88"
+                            cy="88"
+                            r="70"
+                            stroke="#C0267A"
+                            stroke-width="14"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-dasharray="440"
+                            stroke-dashoffset="66" />
+
+                    </svg>
+
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+
+                        <h2 class="text-5xl font-extrabold text-[#C0267A]">
+                            85%
+                        </h2>
+
+                        <p class="text-gray-500">
+                            Kesehatan
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-full bg-emerald-50 text-emerald-600 text-sm font-medium">
+
+                    <i class="fa-solid fa-heart-pulse"></i>
+
+                    Stabil
+
+                </div>
+
+                <p class="mt-5 text-gray-500 leading-relaxed">
+
+                    Jadwal Anda masih seimbang dan terkendali.
+                    Pertahankan ritme belajar saat ini.
+
+                </p>
+
+            </div>
+
+        </div>
 
     </div>
 
-</body>
+</div>
 
-</html>
 @endsection

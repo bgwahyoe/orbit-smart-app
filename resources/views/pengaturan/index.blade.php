@@ -19,12 +19,12 @@
 
             <div class="bg-white dark:bg-[#1A1A1A] p-2 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
 
-                <div class="flex gap-2 text-sm font-semibold">
+                <!-- <div class="flex gap-2 text-sm font-semibold">
 
                     <button class="px-6 py-3 rounded-xl bg-pink-50 dark:bg-pink-500/20 text-[#AC2471]">
                         Profil
                     </button>
-                </div>
+                </div> -->
 
             </div>
 
@@ -94,7 +94,7 @@
 
                         </div>
 
-                        {{-- BIO --}}
+                        <!-- {{-- BIO --}}
                         <div class="mt-6">
 
                             <label class="block mb-2 text-sm font-semibold text-gray-700">
@@ -110,7 +110,7 @@
     focus:border-transparent
     transition-all outline-none resize-none">{{ old('bio', auth()->user()->bio) }}</textarea>
 
-                        </div>
+                        </div> -->
 
                         {{-- BUTTON --}}
                         <div class="border-t border-gray-200 dark:border-gray-800 mt-8 pt-6 flex justify-end gap-4">
