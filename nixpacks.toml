@@ -1,13 +1,18 @@
-[phases.setup]
-nixPkgs = ["...", "php82Extensions.pdo_mysql", "php82Extensions.mysqlnd"]
+[phases.install]
+cmds = [
+  "composer install --no-dev --optimize-autoloader",
+  "npm install",
+  "npm run build"
+]
 
 [phases.build]
 cmds = [
-    "composer install --optimize-autoloader --no-interaction --no-progress",
-    "npm ci",
-    "npm run build"
+  "php artisan key:generate --force",
+  "php artisan config:cache",
+  "php artisan route:cache",
+  "php artisan view:cache",
+  "php artisan cache:clear"
 ]
 
 [start]
-# Kita buat file .env secara instan menggunakan variabel dari Railway
-cmd = "echo 'DB_CONNECTION=mysql\nDB_HOST='${{MySQL.MYSQLHOST}}'\nDB_PORT='${{MySQL.MYSQLPORT}}'\nDB_DATABASE='${{MySQL.MYSQLDATABASE}}'\nDB_USERNAME='${{MySQL.MYSQLUSER}}'\nDB_PASSWORD='${{MySQL.MYSQLPASSWORD}} > .env && php artisan migrate:fresh --force && /start-container.sh"
+cmd = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"
