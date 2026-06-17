@@ -28,10 +28,6 @@ Route::post('/pengaturan', [PengaturanController::class, 'update'])
 
 Route::view('/', 'landing')->name('home');
 
-Route::view('/dashboard', 'dashboard')
-    ->middleware(['auth'])
-    ->name('dashboard');
-
 require __DIR__ . '/auth.php';
 
 Route::middleware(['auth'])->group(function () {
