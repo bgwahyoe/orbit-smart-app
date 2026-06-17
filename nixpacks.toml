@@ -15,4 +15,5 @@ cmds = [
 ]
 
 [start]
-cmd = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"
+# Kita buat file .env secara instan menggunakan variabel dari Railway
+cmd = "echo 'DB_CONNECTION=mysql\nDB_HOST='${{MySQL.MYSQLHOST}}'\nDB_PORT='${{MySQL.MYSQLPORT}}'\nDB_DATABASE='${{MySQL.MYSQLDATABASE}}'\nDB_USERNAME='${{MySQL.MYSQLUSER}}'\nDB_PASSWORD='${{MySQL.MYSQLPASSWORD}} > .env && php artisan migrate:fresh --force && /start-container.sh"
