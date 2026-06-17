@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["...", "nodejs_22", "php82Extensions.pdo_mysql", "php82Extensions.mysqlnd"]
+nixPkgs = ["...", "php82Extensions.pdo_mysql", "php82Extensions.mysqlnd"]
 
 [phases.build]
 cmds = [
@@ -7,11 +7,8 @@ cmds = [
     "composer install --optimize-autoloader --no-interaction --no-progress",
     "npm ci",
     "npm run build",
-    "php artisan config:clear",
     "php artisan view:cache"
-    # PERHATIKAN: TIDAK ADA PERINTAH MIGRATE DI SINI!
 ]
 
 [start]
-cmd = "php artisan migrate:fresh --force && /start-container.sh"
-# MIGRASI HANYA BOLEH ADA DI SINI
+cmd = "php artisan config:clear && php artisan config:cache && php artisan migrate:fresh --force && /start-container.sh"
