@@ -12,12 +12,14 @@ return new class extends Migration
             $table->id();
 
             $table->string('nama');
-            $table->string('kode')->unique();
+            $table->string('kode');
             $table->integer('sks');
 
             $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete();
+
+            $table->unique(['user_id', 'kode']);
 
             $table->timestamps();
         });

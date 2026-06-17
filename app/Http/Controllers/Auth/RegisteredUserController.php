@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use App\Models\MataKuliah;
 
 class RegisteredUserController extends Controller
 {
@@ -33,7 +34,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'nim' => ['required', 'string', 'max:20', 'unique:users'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -43,6 +44,44 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        // Mata kuliah default
+        $mataKuliahDefault = [
+            [
+                'nama' => 'Cyber Security',
+                'kode' => 'CS101',
+                'sks' => 3,
+            ],
+            [
+                'nama' => 'Data Mining',
+                'kode' => 'DM102',
+                'sks' => 3,
+            ],
+            [
+                'nama' => 'Struktur Data',
+                'kode' => 'SD103',
+                'sks' => 3,
+            ],
+            [
+                'nama' => 'Sistem Operasi',
+                'kode' => 'SO104',
+                'sks' => 3,
+            ],
+            [
+                'nama' => 'Jaringan Komputer',
+                'kode' => 'JK105',
+                'sks' => 3,
+            ],
+        ];
+
+        foreach ($mataKuliahDefault as $mk) {
+            MataKuliah::create([
+                'user_id' => $user->id,
+                'nama' => $mk['nama'],
+                'kode' => $mk['kode'],
+                'sks' => $mk['sks'],
+            ]);
+        }
 
         event(new Registered($user));
 
